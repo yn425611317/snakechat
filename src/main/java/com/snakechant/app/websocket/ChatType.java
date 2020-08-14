@@ -1,4 +1,4 @@
-package websocket;
+package com.snakechant.app.websocket;
 
 public enum ChatType {
 

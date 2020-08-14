@@ -20,7 +20,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.ChannelPromise;
-import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpHeaderNames;
@@ -30,9 +29,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler.Ser
 import io.netty.handler.ssl.SslHandler;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.FutureListener;
-import io.netty.util.concurrent.GlobalEventExecutor;
-import websocket.HttpChannelHandle;
-import websocket.WsServerHandler;
+import com.snakechant.app.websocket.HttpChannelHandle;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
@@ -88,7 +85,7 @@ public class WebSocketServerProtocolHandshakeHandler extends ChannelInboundHandl
                     WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
                 } else {
                     // Ensure we set the handshaker and replace this handler before we
-                    // trigger the actual handshake. Otherwise we may receive websocket bytes in this handler
+                    // trigger the actual handshake. Otherwise we may receive com.snakechant.app.websocket bytes in this handler
                     // before we had a chance to replace it.
                     //
                     // See https://github.com/netty/netty/issues/9471.

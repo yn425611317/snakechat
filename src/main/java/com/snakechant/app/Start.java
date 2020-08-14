@@ -1,9 +1,12 @@
+package com.snakechant.app;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.AttributeKey;
 
 
 public class Start {
@@ -23,6 +26,8 @@ public class Start {
          *
          *
          */
+
+
         EventLoopGroup boss = new NioEventLoopGroup(1);
         EventLoopGroup work = new NioEventLoopGroup();
         try {
@@ -34,6 +39,7 @@ public class Start {
                     .childOption(ChannelOption.SO_KEEPALIVE, true)//enalbe tcp keepalive
                     .childOption(ChannelOption.TCP_NODELAY, true) //enable Nagle algorithm
                     .childHandler(new ServersChannelInitializer());
+
             Channel ch = bootstrap.bind(8080).sync().channel();
             ch.closeFuture().sync();
         } finally {

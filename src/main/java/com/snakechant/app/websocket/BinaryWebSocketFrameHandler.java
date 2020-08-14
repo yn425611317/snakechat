@@ -1,4 +1,4 @@
-package websocket;
+package com.snakechant.app.websocket;
 
 
 import io.netty.channel.ChannelHandlerContext;

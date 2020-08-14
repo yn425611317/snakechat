@@ -1,5 +1,6 @@
-package websocket;
+package com.snakechant.app.websocket;
 
+import com.snakechant.app.Start;
 import io.netty.channel.*;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
@@ -21,6 +22,9 @@ public class WsServerHandler extends SimpleChannelInboundHandler<TextWebSocketFr
     public static final ConcurrentHashMap<String, ChannelId> clients = new ConcurrentHashMap<>();
     private AttributeKey<String> requestUrl = AttributeKey.valueOf("url");
 
+
+
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
@@ -31,7 +35,7 @@ public class WsServerHandler extends SimpleChannelInboundHandler<TextWebSocketFr
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) {
         String channel = ctx.channel().attr(requestUrl).get();
-        logger.info("websocket url: {}", channel);
+        logger.info("com.snakechant.app.websocket url: {}", channel);
         String text = msg.text();
         logger.info("receive message is {}", text);
         try {
@@ -81,7 +85,7 @@ public class WsServerHandler extends SimpleChannelInboundHandler<TextWebSocketFr
             logger.info("requestUri:[{}]", requestUri);
             String subproTocol = handshakeComplete.selectedSubprotocol();
             logger.info("subproTocol:[{}]", subproTocol);
-            handshakeComplete.requestHeaders().forEach(entry -> logger.info("header key:[{}] value:[{}]", entry.getKey(), entry.getValue()));
+//            handshakeComplete.requestHeaders().forEach(entry -> logger.info("header key:[{}] value:[{}]", entry.getKey(), entry.getValue()));
         } else {
             super.userEventTriggered(ctx, evt);
         }
