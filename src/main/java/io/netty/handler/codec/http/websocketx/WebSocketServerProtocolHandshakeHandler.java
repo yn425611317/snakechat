@@ -103,30 +103,13 @@ public class WebSocketServerProtocolHandshakeHandler extends ChannelInboundHandl
                                 localHandshakePromise.tryFailure(future.cause());
                                 ctx.fireExceptionCaught(future.cause());
                             } else {
-
                                 localHandshakePromise.trySuccess();
                                 // Kept for compatibility
                                 ctx.fireUserEventTriggered(
                                         WebSocketServerProtocolHandler.ServerHandshakeStateEvent.HANDSHAKE_COMPLETE);
-
                                 ctx.fireUserEventTriggered(
                                         new WebSocketServerProtocolHandler.HandshakeComplete(
                                                 req.uri(), req.headers(), handshaker.selectedSubprotocol()));
-
-
-                                //successed handshake then add this channel to a map
-
-
-                                WsServerHandler.clientGroup.putIfAbsent(req.uri(), new DefaultChannelGroup(GlobalEventExecutor.INSTANCE));
-                                String id = ctx.channel().id().asLongText().replaceAll("-", "");
-                                WsServerHandler.clientGroup.computeIfPresent(req.uri(), (key, value) -> {
-                                    value.add(ctx.channel());
-                                    return value;
-                                });
-                                WsServerHandler.clients.put(id, ctx.channel().id());
-                                WsServerHandler.clientGroup.get(req.uri())
-                                        .writeAndFlush(new TextWebSocketFrame(id + ": line"));
-
                             }
                         }
                     });
